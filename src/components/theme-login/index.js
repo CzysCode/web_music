@@ -1,6 +1,5 @@
-import React, { memo, useRef, useState } from 'react'
+import React, { memo, useState } from 'react'
 import { Button, message, Modal } from 'antd'
-import Draggable from 'react-draggable'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { changeIsVisible } from './store'
 import { PhoneOutlined } from '@ant-design/icons'
@@ -13,10 +12,7 @@ import ThemeLoginForm from '../theme-login-form'
  */
 function ThemeLogin() {
   // state/props
-  const [disabled, setDisabled] = useState(true)
   const [loginState, setLoginState] = useState('default') // 默认状态显示
-  const [bounds, setBounds] = useState({ left: 0, top: 0, bottom: 0, right: 0 })
-  const draggleRef = useRef()
 
   // redux
   const dispatch = useDispatch()
@@ -35,18 +31,6 @@ function ThemeLogin() {
     setTimeout(() => {
       setLoginState('default')
     }, 100)
-  }
-  // 拖拽
-  const onStart = (event, uiData) => {
-    console.log('---->拖拽')
-    const { clientWidth, clientHeight } = window?.document?.documentElement
-    const targetRect = draggleRef?.current?.getBoundingClientRect()
-    setBounds({
-      left: -targetRect?.left + uiData?.x,
-      right: clientWidth - (targetRect?.right - uiData?.x),
-      top: -targetRect?.top + uiData?.y,
-      bottom: clientHeight - (targetRect?.bottom - uiData?.y),
-    })
   }
 
   // other handle
@@ -125,7 +109,6 @@ function ThemeLogin() {
   }
 
   return (
-    <Draggable>
       <Modal
         centered
         footer={null}
@@ -133,20 +116,19 @@ function ThemeLogin() {
           <div
             style={{
               width: '100%',
-              cursor: 'move',
             }}
-            onMouseOver={() => {
-              if (disabled) {
-                setDisabled(false)
-              }
-            }}
-            onMouseOut={() => {
-              setDisabled(true)
-            }}
+            // onMouseOver={() => {
+            //   if (disabled) {
+            //     setDisabled(false)
+            //   }
+            // }}
+            // onMouseOut={() => {
+            //   setDisabled(true)
+            // }}
             // fix eslintjsx-a11y/mouse-events-have-key-events
             // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/mouse-events-have-key-events.md
-            onFocus={() => {}}
-            onBlur={() => {}}
+            // onFocus={() => {}}
+            // onBlur={() => {}}
             // end
           >
             {loginState === 'register' ? '注册' : '登录'}
@@ -154,15 +136,14 @@ function ThemeLogin() {
         }
         visible={isVisible}
         onCancel={handleCancel}
-        modalRender={(modal) => (
-          <Draggable
-            disabled={disabled}
-            bounds={bounds}
-            onStart={(event, uiData) => onStart(event, uiData)}
-          >
-            <div ref={draggleRef}>{modal}</div>
-          </Draggable>
-        )}
+        // modalRender={(modal) => (
+        //   // <Draggable
+        //   //   disabled={disabled}
+        //   //   bounds={bounds}
+        //   // // >
+        //   //   <div>{modal}</div>
+        //   // </Draggable>
+        // )}
       >
         {/* 登录 */}
         {loginState === 'default' ? defaultWrapperContent : null}
@@ -170,7 +151,6 @@ function ThemeLogin() {
         {loginState === 'email' ? phoneLogin('email') : undefined}
         {loginState === 'register' ? phoneLogin('register') : undefined}
       </Modal>
-    </Draggable>
   )
 }
 

@@ -83,7 +83,7 @@ export default memo(function JMAppPlayerBar() {
   function timeUpdate(e) {
     // 没有在滑动滑块时触发(默认时没有滑动)
     let currentTime = e.target.currentTime;
-    if (!isChanging) {
+    if (!isChanging) { 
       setCurrentTime(currentTime * 1000);
       setProgress(((currentTime * 1000) / duration) * 100);
     }
@@ -101,6 +101,7 @@ export default memo(function JMAppPlayerBar() {
         break;
       }
     }
+     
     // 对dispatch进行优化,如果index没有改变,就不进行dispatch
     if (currentLyricIndex !== i - 1) {
       dispatch(changeCurrentLyricIndexAction(i - 1));
@@ -110,6 +111,7 @@ export default memo(function JMAppPlayerBar() {
     const lyricContent = lyricList[i - 1] && lyricList[i - 1].content;
     lyricContent &&
       message.open({
+        // 当 key 相同的时候， message 只会保留一个
         key: 'lyric',
         content: lyricContent,
         duration: 0,
@@ -126,12 +128,12 @@ export default memo(function JMAppPlayerBar() {
       // 滑动滑块时:更改标识变量为false(touch move for changing state),此时不会触发onTimeUpdate(歌曲播放事件)
       setIsChanging(true);
       // 更改"当前播放时间"要的是毫秒数: 241840(总毫秒)   1 * 241840 / 1000 241.84 / 60  4.016667
-      const currentTime = (value / 100) * duration;
-      setCurrentTime(currentTime);
+      // const currentTime = (value / 100) * duration;
+      // setCurrentTime(currentTime);
       // 更改进度条值
       setProgress(value);
     },
-    [duration]
+    []
   );
 
   // 手指抬起时触发
@@ -218,7 +220,7 @@ export default memo(function JMAppPlayerBar() {
   return (
     <PlayerbarWrapper className="sprite_player">
       <div className="w980 content">
-        <Control isPlaying={isPlaying}>
+        <Control isPlaying={isPlaying}> 
           <button
             className="sprite_player pre"
             onClick={(e) => changeSong(-1)}

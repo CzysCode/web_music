@@ -60,6 +60,7 @@ export const getLoginProfileInfo = (username, password, tip) => {
         loginInfo.username = username
         loginInfo.password = password
         loginInfo.state = true
+        // Object.assign， 如果后面的对象和前面的对象有同名属性的话，就会覆盖前面对象的同名属性！
         let newLoginInfo = Object.assign(getLoginInfo('loginInfo'), loginInfo)
         setLoginInfo('loginInfo', newLoginInfo)
         // console.log(getLoginInfo('loginInfo'))

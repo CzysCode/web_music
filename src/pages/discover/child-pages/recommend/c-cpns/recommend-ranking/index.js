@@ -1,6 +1,6 @@
 import React, { memo, useEffect } from 'react'
 
-import ThemeHeaderRcm from 'components/theme-header-rcm'
+import ThemeHeaderRcm from '@/components/theme-header-rcm'
 import TopList from 'components/top-ranking'
 import { RankingWrapper } from './style'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'

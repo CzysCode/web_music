@@ -13,7 +13,7 @@ import ThemeLogin from '@/components/theme-login';
 import { changeIsVisible } from '@/components/theme-login/store';
 
 import { Dropdown, Input, Menu } from 'antd';
-import { DownOutlined, SearchOutlined } from '@ant-design/icons';
+import {  SearchOutlined } from '@ant-design/icons';
 import { HeaderLeft, HeaderRight, HeaderWrapper } from './style';
 import { clearLoginState } from '../../utils/secret-key';
 
@@ -42,7 +42,7 @@ export default memo(function JMAppHeader(props) {
       );
     } else {
       return (
-        <a href={item.link} key={item.title} className="header-item">
+        <a href={item.link} key={item.title} className="header-item" onClick={e => e.preventDefault()}>
           {item.title}
         </a>
       );
@@ -140,24 +140,7 @@ export default memo(function JMAppHeader(props) {
     [recordActive, setRecordActive, searchSongList]
   );
 
-  // icons键盘图标
-  const icons = (
-    <div className="icons-wrapper">
-      <div className="ctrl-wrapper">
-        <svg width="15" height="15" className="DocSearch-Control-Key-Icon">
-          <path
-            d="M4.505 4.496h2M5.505 5.496v5M8.216 4.496l.055 5.993M10 7.5c.333.333.5.667.5 1v2M12.326 4.5v5.996M8.384 4.496c1.674 0 2.116 0 2.116 1.5s-.442 1.5-2.116 1.5M3.205 9.303c-.09.448-.277 1.21-1.241 1.203C1 10.5.5 9.513.5 8V7c0-1.57.5-2.5 1.464-2.494.964.006 1.134.598 1.24 1.342M12.553 10.5h1.953"
-            strokeWidth="1.2"
-            stroke="currentColor"
-            fill="none"
-            strokeLinecap="square"
-          ></path>
-        </svg>
-      </div>
-      <div className="k-wrapper">k</div>
-    </div>
-  );
-
+ 
   // 用户下拉JSX
   const profileDwonMenu = () => {
     return (
@@ -167,7 +150,7 @@ export default memo(function JMAppHeader(props) {
             <a
               target="_blank"
               rel="noopener noreferrer"
-              href="#/"
+              href="/"
               onClick={(e) => e.preventDefault()}
             >
               {profile.nickname}
@@ -176,20 +159,11 @@ export default memo(function JMAppHeader(props) {
           <Menu.Item>
             <a
               rel="noopener noreferrer"
-              href="#/user"
+              href="/user"
             >
               我的主页
             </a>
           </Menu.Item>
-          {/* <Menu.Item>
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="#/"
-            >
-              没想好
-            </a>
-          </Menu.Item> */}
           <Menu.Item danger onClick={() => clearLoginState()}>退出登录</Menu.Item>
         </Menu>
       ) : ''
@@ -199,10 +173,6 @@ export default memo(function JMAppHeader(props) {
   const showProfileContent = () => {
     return (
       <img src={profile.avatarUrl} alt="" className="profile-img" />
-      // <div>
-      //   <img src={profile.avatarUrl} alt="" className="profile-img" />
-      //   {/* <span>{profile.nickname}</span> */}
-      // </div>
     )
   }
 
@@ -212,7 +182,7 @@ export default memo(function JMAppHeader(props) {
       <div className="content w1100">
         <HeaderLeft>
           <h1>
-            <a href="#/" className="logo sprite_01">
+            <a href="/" className="logo sprite_01">
               网易云音乐
             </a>
           </h1>
@@ -232,12 +202,12 @@ export default memo(function JMAppHeader(props) {
               prefix={<SearchOutlined />}
               onChange={(e) => setIsRedirect(false) || setValue(e.target.value)}
               onInput={({ target }) => changeInput(target)}
-              onFocus={handleFocus}
+              onFocus={handleFocus} //选中当前input框的所有内容，并修改焦点以及setIsRedirect
               onPressEnter={(e) => handleEnter(e)}
               value={value}
               onKeyDown={watchKeyboard}
-              suffix={icons}
             />
+            {/* 下面这个放在哪里都一样，因为直接就路由跳转到歌曲的搜索结果页面了 */}
             {isRedirect && (
               <Redirect
                 to={{
@@ -248,7 +218,7 @@ export default memo(function JMAppHeader(props) {
             )}
             <div
               className="down-slider"
-              style={{ display: focusState ? 'block' : 'none' }}
+              style={{ visibility: focusState ? 'visible' : 'hidden' }}
             >
               <div className="search-header">
                 <span className="discover">搜"歌曲"相关用户&gt;</span>
@@ -287,11 +257,11 @@ export default memo(function JMAppHeader(props) {
             >
               {/* {isLogin ? profile.nickname : '登录'} */}
               <a
-                href="https://juejin.cn/user/606586151899166"
+                href="#/"
                 className="ant-dropdown-link"
                 onClick={(e) => e.preventDefault()}
               >
-                {isLogin ? showProfileContent() : '登录'} <DownOutlined />
+                {isLogin ? showProfileContent() : '登录'}
               </a>
             </div>
           </Dropdown>

@@ -13,7 +13,7 @@ import { getSongDetailArrayAction } from '../player/store/index'
 
 export default memo(function APPWrapper() {
   // props/state
-  const [isShow, setIsShow] = useState(false)
+  // const [isShow, setIsShow] = useState(false)
 
   // redux hook
   const dispatch = useDispatch()
@@ -48,24 +48,24 @@ export default memo(function APPWrapper() {
   useEffect(() => {
     // getPlaylistId().forEach((id) => {
       // 动态获取locals store音乐索引
-      const index = getCurrentSongIndex()
-      dispatch(getSongDetailArrayAction(getPlaylistId(), index))
+    const index = getCurrentSongIndex()
+    dispatch(getSongDetailArrayAction(getPlaylistId(), index))
     // })
   }, [dispatch])
 
-  // other function
-  const handleOk = () => {
-    setIsShow(false)
-  }
+  // // other function
+  // const handleOk = () => {
+  //   setIsShow(false)
+  // }
 
-  const handleCancel = () => {
-    setIsShow(false)
-  }
+  // const handleCancel = () => {
+  //   setIsShow(false)
+  // }
 
   return (
     <>
       <Suspense fallback={<Skeleton active />}>{renderRoutes(routes)}</Suspense>
-      <ThemeDialog
+      {/* <ThemeDialog
         controlShow={isShow}
         title="上传音乐"
         handleOk={handleOk}
@@ -73,8 +73,8 @@ export default memo(function APPWrapper() {
       >
         <h2>hello dialog</h2>
         <h3>上传音乐</h3>
-      </ThemeDialog>
-      {/* <Button onClick={() => setIsShow(!isShow)}>点我</Button> */}
+      </ThemeDialog> */}
+      {/* <button onClick={() => setIsShow(!isShow)}>点我</button> */}
     </>
   )
 })

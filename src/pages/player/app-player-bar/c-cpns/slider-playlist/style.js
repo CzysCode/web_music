@@ -76,10 +76,12 @@ export const SliderPlaylistMain = styled.div`
       /*水平滚动条的样式*/
       width: 4px;
       background-color: #9f9f9f;
+      border-radius:4px;
       -webkit-border-radius: 4px;
     }
     ::-webkit-scrollbar-track-piece {
       background-color: #1a1a1a; /*滚动条的背景颜色*/
+      border-radius:0;
       -webkit-border-radius: 0; /*滚动条的圆角宽度*/
     }
     ::-webkit-scrollbar {
@@ -90,6 +92,7 @@ export const SliderPlaylistMain = styled.div`
       /*垂直滚动条的样式*/
       height: 50px;
       background-color: #9f9f9f;
+      border-radius:4px;
       -webkit-border-radius: 4px;
       /* outline: 2px solid #000; */
       /* outline-offset: -2px; */

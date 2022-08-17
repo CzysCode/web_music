@@ -6,17 +6,6 @@ import { PaginationWrapper } from './style';
 export default memo(function HYPagination(props) {
   const { currentPage, total, onPageChange } = props;
 
-  // render function
-  function itemRender(current, type, originalElement) {
-    if (type === 'prev') {
-      return <button className="control prev"> &lt; 上一页</button>;
-    }
-    if (type === 'next') {
-      return <button className="control next">下一页 &gt;</button>;
-    }
-    return originalElement;
-  }
-
   return (
     <PaginationWrapper>
       <Pagination className="pagination"
@@ -24,9 +13,8 @@ export default memo(function HYPagination(props) {
         current={currentPage}
         defaultCurrent={1}
         total={total}
-        pageSize={35}
+        pageSize={20}
         showSizeChanger={false}
-        itemRender={itemRender}
         onChange={onPageChange} />
     </PaginationWrapper>
   )

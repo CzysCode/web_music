@@ -39,18 +39,6 @@ export default class ThemeComment extends React.Component {
       message.warning('请输入评论内容')
       return
     }
-
-    // this.setState(
-    //   {
-    //     submitting: true,
-    //   },
-    //   () => {
-    //     // 调登录接口
-    //     sendSongComment(this.props.id, this.state.value, this.props.cookie).then((res) => {
-    //       console.log('res :>>>', res)
-    //     })
-    //   }
-    // )
     this.props.callbackOk(this.state.value)
   }
 
@@ -61,6 +49,7 @@ export default class ThemeComment extends React.Component {
   }
 
   handleFocus = (e) => {
+    // 如果没有登录的话，就操作失去焦点
     !this.props.isLogin && e.target.blur()
     this.props.onFocus(this.state.value)
   } 

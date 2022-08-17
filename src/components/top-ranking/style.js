@@ -114,6 +114,8 @@ export const TopRankingWrapper = styled.div`
     align-items: center;
     .show-all {
       margin-right: 15px;
+      cursor: default;
+      text-decoration: none;
     }
   }
 `

@@ -5,7 +5,7 @@ import { HOT_RECOMMEND_LIMIT } from '@/common/constants'
 
 import { HotRecommendWrapper } from './style'
 import ThemeHeaderRmc from 'components/theme-header-rcm'
-import { getHostBannersAction } from '../../store/actionCreator'
+import { getHotBannersAction } from '../../store/actionCreator'
 import SongCover from 'components/song-cover'
 
 export default memo(function HotRecommend(props) {
@@ -23,7 +23,7 @@ export default memo(function HotRecommend(props) {
 
   // other hooks
   useEffect(() => {
-    dispatch(getHostBannersAction(HOT_RECOMMEND_LIMIT))
+    dispatch(getHotBannersAction(HOT_RECOMMEND_LIMIT))
   }, [dispatch])
 
   // other function
@@ -38,7 +38,7 @@ export default memo(function HotRecommend(props) {
         keywords={['华语', '流行', '摇滚', '民谣', '电子']}
         keywordsClick={(item) => handleKeyWordClick(item)}
       />
-      <div className="recommend-list">
+      <div className='recommend-list'>
         {hotRecommends &&
           hotRecommends.map((item) => {
             return (

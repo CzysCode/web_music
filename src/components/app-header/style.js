@@ -47,9 +47,8 @@ export const HeaderLeft = styled.div`
       }
 
       /* hot图标 */
-      :last-of-type {
-        position: relative;
-        ::after {
+      &:last-of-type {
+        &::after {
           position: absolute;
           content: '';
           width: 28px;
@@ -104,7 +103,7 @@ export const HeaderRight = styled.div`
       }
     }
 
-    /* icons */
+    /* icons
     .icons-wrapper {
       display: flex;
 
@@ -137,10 +136,11 @@ export const HeaderRight = styled.div`
         padding-bottom: 2px;
         width: 25px;
       }
-    }
+    } */
 
     /* 下拉框 */
     .down-slider {
+      display: block;
       position: absolute;
       top: 36px;
       left: 0;
@@ -200,12 +200,12 @@ export const HeaderRight = styled.div`
             &:hover {
               background-color: #ecf0f1;
               border-radius: 5%;
-              color: #2ecc71;
+              color: #555;
             }
 
             &.active {
               background-color: #ecf0f1;
-              color: #2ecc71;
+              color: #555;
             }
           }
         }
@@ -225,7 +225,7 @@ export const HeaderRight = styled.div`
     margin: 0 13px;
     background-color: transparent;
 
-    &:hover {
+    :hover {
       cursor: pointer;
       border-color: #fff;
       color: #fff;

@@ -15,7 +15,6 @@ import { SongsWrapper } from './style'
 export default memo(function HYSongs() {
   // props/state
   const { albumName } = getQueryObject()
-
   // redux
   const dispatch = useDispatch()
   const cat = useLocation().cat

@@ -79,7 +79,7 @@ export const Control = styled.div`
     /* 动态的传递 */
     background-position: 0 ${props => (props.isPlaying ? '-165px' : '-204px')};
     margin-top: 0;
-
+    
     &:hover {
       /* 动态的传递 */
       background-position: -40px

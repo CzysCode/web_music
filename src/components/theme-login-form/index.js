@@ -137,6 +137,8 @@ const ThemeLoginForm = (props) => {
           </Button>
         </Form.Item>
       </Form>
+
+      {/* 注册页面 */}
       <Form
         style={{
           display: loginState === 'register' ? 'block' : 'none',

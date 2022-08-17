@@ -20,11 +20,11 @@ export const LyricContentWrapper = styled.div`
   }
   ::-webkit-scrollbar {
     width: 8px; /*滚动条的宽度*/
-    height: 6px; /*滚动条的高度*/
+    height: 10px; /*滚动条的高度*/
   }
   ::-webkit-scrollbar-thumb:vertical {
     /*垂直滚动条的样式*/
-    height: 50px;
+    height: 20px;
     background-color: #9f9f9f;
     -webkit-border-radius: 4px;
     /* outline: 2px solid #000; */

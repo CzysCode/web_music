@@ -13,7 +13,7 @@ import { useChangeDropBoxState , useGlobalKeyboardEvent} from '@/hooks/change-st
 export default memo(function JMDiscover(props) {
   // props/state
   const { route } = props
-
+  
   // custom hook
   useGlobalKeyboardEvent()// 全局注册 ctrl+k 唤醒下拉框
 

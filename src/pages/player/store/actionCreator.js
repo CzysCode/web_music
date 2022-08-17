@@ -77,7 +77,7 @@ export const changeCurrentIndexAndSongAction = (tag) => {
     const playList = getState().getIn(['player', 'playList'])
     // 当前播放的索引/下标
     let currentSongIndex = getState().getIn(['player', 'currentSongIndex'])
-
+    // console.log('当前播放歌曲下标' + currentSongIndex)
     // 根据播放顺序选择下一首音乐
     switch (playSequence) {
       case 1: // 随机播放
@@ -88,7 +88,7 @@ export const changeCurrentIndexAndSongAction = (tag) => {
         }
         // 更改当前播放音乐的下标
         currentSongIndex = random
-        break
+        break;
       default:
         // 顺序播放
         // 更改当前播放音乐的下标
@@ -139,7 +139,7 @@ export const getSongDetailAction = (idx) => {
       // 请求该歌曲的数据
       // console.log(1)
       await getSongDetail(idx).then((res) => {
-        console.log(res.songs[0])
+        res.songs && console.log(res.songs[0])
         // (0)歌曲ID添加到本地存储
         addPlaylistId(idx)
         const song = res.songs && res.songs[0]
@@ -184,35 +184,6 @@ export const getSongDetailArrayAction = (listId, index) => {
     let i = 0
     let timer = null
     let excuteRun = true
-/*     listId.forEach(async (idx) => {
-      console.log(1)
-      await new Promise((resolve) => {
-        getSongDetail(idx).then((res) => {
-          console.log(2)
-        // (0)歌曲ID添加到本地存储
-          addPlaylistId(idx)
-          const song = res.songs && res.songs[0]
-          // console.log(song)
-          if (!song) return
-          // (1)添加到播放列表中
-          playList.push(song)
-          dispatch(changePlayListAction(playList))
-          // (2)更改当前播放的索引
-          const songIndex = index ?? playList.length - 1
-          dispatch(changeSongIndexAction(songIndex))
-          // (3)更改当前播放歌曲
-          let currentIndexSong = playList[songIndex] || song
-          // console.log(currentIndexSong)
-          dispatch(changeCurrentSongAction(currentIndexSong))
-          // (4)请求歌曲的歌词
-          dispatch(getLyricAction(idx))
-          // (5)更新歌曲数量
-          dispatch(changePlayListCount(playList.length))
-          resolve()
-        })
-      })
-      console.log(3)
-    }) */
 
     timer = setInterval(() => {
       let idx = listId[i]
@@ -229,7 +200,8 @@ export const getSongDetailArrayAction = (listId, index) => {
             // (1)添加到播放列表中
             playList.push(song)
             dispatch(changePlayListAction(playList))
-            // (2)更改当前播放的索引
+            // (2)更改当前播放的索引 ?? 当index如果不是undefined或者null的时候，
+            // songIndex就赋值为index，否则赋值为playList.length - 1
             const songIndex = index ?? playList.length - 1
             dispatch(changeSongIndexAction(songIndex))
             // (3)更改当前播放歌曲
@@ -268,11 +240,11 @@ export const getSongDetailArrayAction = (listId, index) => {
 // 歌词network request
 export const getLyricAction = (id) => {
   return async (dispatch) => {
-    await getLyric(id).then((res) => {
-      const lyric = res.lrc && res.lrc.lyric
-      const lyricList = parseLyric(lyric)
-      dispatch(changeLyricAction(lyricList))
-    })
+    let res = await getLyric(id)
+    console.log(res)
+    const lyric = res.lrc && res.lrc.lyric
+    const lyricList = parseLyric(lyric)
+    dispatch(changeLyricAction(lyricList))
   }
 }
 
@@ -284,7 +256,7 @@ export const getAddSongDetailAction = (id) => {
       addPlaylistId(id)
       const playList = getState().getIn(['player', 'playList'])
       // 先判断是已经存在播放列表,如果不存在,再进行添加
-      const songIndex = playList.findIndex((song) => song.id === id)
+      const songIndex = playList.findIndex((song) => song && song.id === id)
       if (songIndex !== -1) return // 找到了(后续不再执行)
       // 获取要添加播放的歌曲信息
       const willAddSong = res.songs && res.songs[0]

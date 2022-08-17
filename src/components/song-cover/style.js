@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const SongCoverWrapper = styled.a`
   width: ${props => props.width + 'px' };
-  margin: 20px 0 20px 0;
+  margin: 20px 0 0 0;
   .cover-wrapper {
     width: 140px;
     height: 140px;
@@ -57,7 +57,4 @@ export const SongCoverWrapper = styled.a`
     margin-top: 5px;
   }
 
-  .cover-source {
-    color: #666;
-  }
 `

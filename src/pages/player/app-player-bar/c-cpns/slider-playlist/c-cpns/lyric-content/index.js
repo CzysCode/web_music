@@ -21,7 +21,7 @@ export default memo(function LyricContent() {
     if (currentLyricIndex > 0 && currentLyricIndex < 3) return
     scrollTo(panelRef.current, (currentLyricIndex - 3) * 32, 300)
   }, [currentLyricIndex])
-
+  
   return (
     <LyricContentWrapper ref={panelRef}>
       <div className="lyric-content">

@@ -61,7 +61,7 @@ export const getTopBannersAction = () => {
 }
 
 // 热门推荐network request
-export const getHostBannersAction = (limit) => {
+export const getHotBannersAction = (limit) => {
   return (dispatch) => {
     getHotRecommends(limit).then((res) => {
       dispatch(changeHotRecommendAction(res))

@@ -80,6 +80,9 @@ export const ProfileWrapper = styled.main`
       .recommend {
         margin: 15px 0;
       }
+      .address{
+        margin-top: -15px;
+      }
     }
   }
   .song-list {

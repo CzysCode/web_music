@@ -17,8 +17,9 @@ function SongCover(props) {
   const songInfoId = (info && info.id) || (songList && songList.id)
   
   return (
-    <SongCoverWrapper width={width} href={`#/songlist?songlistId=${songInfoId}`}>
+    <SongCoverWrapper width={width} href={`/songlist?songlistId=${songInfoId}`}>
       <div className="cover-wrapper">
+        {/* 封面图片 */}
         <img src={getSizeImage(picUrl, 140)} alt="" />
         <div className="cover-mask sprite_cover">
           <div className="bottom-bar sprite_cover">
@@ -30,10 +31,7 @@ function SongCover(props) {
           </div>
         </div>
       </div>
-      <div className="cover-title text-nowrap">by-{name}</div>
-      <div className="cover-source text-nowrap">
-        by {(info && info.copywriter) || nickname}
-      </div>
+      <div className="cover-title">{name}</div>
     </SongCoverWrapper>
   )
 }

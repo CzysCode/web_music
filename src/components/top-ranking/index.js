@@ -10,13 +10,12 @@ import {
   changeFirstLoad,
 } from '@/pages/player/store/actionCreator'
 import { useAddPlaylist } from '../../hooks/change-music'
-import { changeCurrentIndexAction } from '../../pages/discover/child-pages/toplist/store/actionCreator'
 
 export default memo(function TopRanking(props) {
   // ranking-list排行列表效果需求:
   // 鼠标放到一行item身上hover效果 播放按钮和添加播放列表和收藏的icons
   // props/state
-  const { info, index } = props
+  const { info } = props
   const { tracks = [] } = info
   // let localPlayList = [] // 本地存储(暂时不做)
 
@@ -47,12 +46,6 @@ export default memo(function TopRanking(props) {
   // 添加到播放列表(使用自定义hook)
   const addPlaylist = useAddPlaylist(playList,message)
 
-  // function
-  const toLink = (e) => {
-    e.preventDefault()
-    dispatch(changeCurrentIndexAction(index))
-    props.to.push(`/discover/ranking?id=${info.id}`)
-  }
 
   return (
     <TopRankingWrapper>
@@ -111,7 +104,7 @@ export default memo(function TopRanking(props) {
           })}
       </div>
       <div className="ranking-footer">
-        <a href="/all" className="show-all" onClick={(e) => toLink(e)}>
+        <a href="/all" className="show-all" onClick={(e) => e.preventDefault()}>
           查看全部&gt;
         </a>
       </div>

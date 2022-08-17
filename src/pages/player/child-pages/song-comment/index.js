@@ -2,7 +2,6 @@ import React, {
   memo,
   useEffect,
   useState,
-  createElement,
   useCallback,
 } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
@@ -25,7 +24,6 @@ function SongComment() {
   const [songComment, setSongComment] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [total, setTotal] = useState(0)
-  const [flag, setFlag] = useState(false)
   const [liked, setLiked] = useState([]) // 歌曲的点赞状态
   // const [total, setTotal] = useState(0)
 
@@ -50,6 +48,7 @@ function SongComment() {
 
   // other hooks
   useEffect(() => {
+    // 这个热门评论放入redux中保存，普通的最新评论是实时存入state中的，没有使用redux
     dispatch(getHotCommentAction(currentSongId))
     getSongComment(currentSongId).then((res) => {
       setSongComment(res.comments)
@@ -66,6 +65,7 @@ function SongComment() {
     var date = new Date(time + 8 * 3600 * 1000) // 增加8小时
     return date.toJSON().substr(0, 19).replace('T', ' ')
   }
+
   // 点赞评论
   const likeComment = (index, data) => {
     // if (liked[index].count >= 1) return
@@ -73,7 +73,8 @@ function SongComment() {
     if(!isLogin) { // 没登陆
       dispatch(changeIsVisible(true))
     }
-    if (!flag) {
+    if (!liked[index].liked) {
+      console.log('111111111111')
       liked[index].liked = true
       liked[index].count += 1
       setLiked(liked)
@@ -84,13 +85,12 @@ function SongComment() {
         // if(res.message !== 'exist') message.success('以点赞过啦')
         // else message.success('点赞成功')
         if(res.code === 200) message.success('点赞成功')
-        else message.success('请稍后再试')
+        else message.error('请稍后再试')
       })
     } else {
       liked[index].liked = false
       liked[index].count -= 1
       setLiked(liked)
-      setFlag(true)
       /* 调取消点赞接口 */
       // console.log('disliked')
       /* 调取消点赞赞接口 */
@@ -99,7 +99,6 @@ function SongComment() {
         else message.success('取消点赞成功')
       })
     }
-    setFlag(!flag)
   }
 
   // 分页
@@ -110,6 +109,7 @@ function SongComment() {
       const targePageCount = (currentPage - 1) * 20
       getSongComment(currentSongId, 20, targePageCount).then((res) => {
         setSongComment(res.comments)
+        // console.log(res.total)
         setTotal(res.total)
       })
     },
@@ -123,18 +123,21 @@ function SongComment() {
       liked: item.liked,
       count: item.likedCount,
     })
+    // console.log(liked)
     // console.log('item, index :>>>', item, index)
     return [
-      <Tooltip key="comment-basic-like" title="Like" className="comment-like">
+      <Tooltip key="comment-basic-like" title="点赞" className="comment-like">
         <span onClick={() => likeComment(index, item)}>
-          {createElement(
-            liked[index].liked === true ? LikeFilled : LikeOutlined
-          )}
+          {
+            liked[index].liked === true ? <LikeFilled /> : <LikeOutlined />
+          }
           <span className="comment-action">{getCount(liked[index].count)}</span>
+        {console.log('刚开始渲染点赞图标')}
         </span>
       </Tooltip>,
     ]
   }
+
   // 评论歌曲校验(获取焦点)
   const commentSongcheckout = () => {
     // 没登录
@@ -147,6 +150,7 @@ function SongComment() {
       if(res.code === 200) message.success('评论成功').then(() => {
         getSongComment(currentSongId).then((res) => {
           setSongComment(res.comments)
+          console.log(res.comments)
           setTotal(res.total)
         })
       })

@@ -10,7 +10,7 @@ export default memo(function ErrorPage(props) {
     history.push('/')
   }
 
-  return (
+  return ( 
     <Result
       status="404"
       title="404"

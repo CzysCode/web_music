@@ -31,6 +31,7 @@ export default memo(function TopBanners() {
     dispatch(getTopBannersAction())
   }, [dispatch])
 
+  // 设置相应的下标，用来取出来相应的背景高斯模糊图片
   const bannerChange = useCallback((from, to) => {
     setCurrentIndex(to)
   }, [])

@@ -16,7 +16,7 @@ import {
   // changeSongIndexAction
 } from '../../../store/actionCreator';
 import LyricContent from './c-cpns/lyric-content';
-import { removeAllSong , resetPlaylistId} from '@/utils/localstorage';
+import { removeAllSong, resetPlaylistId } from '@/utils/localstorage';
 
 function SliderPlaylist(props) {
   // props/state
@@ -43,22 +43,25 @@ function SliderPlaylist(props) {
   const playlistRef = useRef();
   // 歌曲列表拖拽初始化
   useEffect(() => {
-    const el = playlistRef.current.querySelector('.main-playlist');
+    let el = playlistRef.current.querySelector('.main-playlist');
     new Sortable(el, {
       sort: true,
       animation: 200,
       currentIndex: 0,
-      onEnd:  function (evt)  {
+      onEnd: function (evt) {
         // 拖拽结束发生该事件
         // tableData 改成自己的数组
         let tempPlayList = playList;
         // 看看能否获取当前歌曲对象 👇
         const musicsId = []
+        // 将原来的playList进行操作，首先删除旧的index的元素，
+        // 再把它插入到新的下标处
         tempPlayList.splice(
           evt.newIndex,
           0,
           playList.splice(evt.oldIndex, 1)[0]
         );
+        
         // 更改播放列表顺序
         dispatch(changePlayListAction(tempPlayList));
         musicsId.push(...tempPlayList.map((item) => item.id))
@@ -69,7 +72,7 @@ function SliderPlaylist(props) {
             情况一：如果是拖拽当前播放的歌曲，直接改变索引
             情况二：如果拖拽是其他歌曲，那么不改变索引
         */
-        
+
         // console.log(`当前播放的索引${currentSongIndex}  正在拖拽的索引${evt.newIndex}`, this)
         // 更改播放索引 拖拽的顺序 有问题 
         // dispatch(changeSongIndexAction(evt.newIndex))
@@ -89,7 +92,7 @@ function SliderPlaylist(props) {
         // console.log('currentSongIndex', currentSongIndex, changeSongIndexAction)
       },
     });
-    
+
   }, [currentSongIndex, dispatch, playList, currentSong]);
 
   // other function
@@ -144,6 +147,7 @@ function SliderPlaylist(props) {
         </div>
       </SliderPlaylistHeader>
       <SliderPlaylistMain ref={playlistRef}>
+        {/* 播放列表部分是main-playlist */}
         <div className="main-playlist">
           {playList &&
             playList.map((item, index) => {

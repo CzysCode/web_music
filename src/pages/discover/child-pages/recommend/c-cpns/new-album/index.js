@@ -24,7 +24,7 @@ export default memo(function NewAlbum() {
   useEffect(() => {
     dispatch(getNewAlbumsAction())
   }, [dispatch])
-
+  
   /* 轮播图布局思路:
       两个页面轮播: 2page
       在page中添加一个个item
